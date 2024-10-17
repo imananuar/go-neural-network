@@ -4,3 +4,5 @@
 *.o
 *.a
 *.so
+go.sum
+go.mod
