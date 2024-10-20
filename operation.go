@@ -4,16 +4,15 @@ import (
 	"fmt"
 )
 
-func AddMatrix(matrix1, matrix2 [][]int) ([][]int, error) {
+func AddMatrix[T Matrix](matrix1, matrix2 [][]T) ([][]T, error) {
 
 	if len(matrix1[0]) != len(matrix2[0]) || len(matrix1) != len(matrix2) {
-		return nil, fmt.Errorf("matrices must be in the same dimensions")
+		return nil, fmt.Errorf("matrix must be in the same dimensions")
 	}
 	cols := len(matrix1[0])
 	rows := len(matrix1)
 
-	sumMatrix := CreateZeroMatrix(rows, cols)
-	fmt.Println(sumMatrix)
+	sumMatrix := CreateZeroMatrix[T](rows, cols)
 	
 	for row := 0; row < rows; row++ {
 		for col := 0; col < cols; col++ {
@@ -22,27 +21,24 @@ func AddMatrix(matrix1, matrix2 [][]int) ([][]int, error) {
 	}
 	return sumMatrix, nil
 }
-
-// create subtract
-func SubtractMatrix(matrix1, matrix2 [][]int) ([][]int, error) {
+func SubtractMatrix[T Matrix](matrix1, matrix2 [][]T) ([][]T, error) {
 	if len(matrix1[0]) != len(matrix2[0]) || len(matrix1) != len(matrix2) {
 		return nil, fmt.Errorf("matrix must be in the same dimensions")
 	}
 	cols := len(matrix1[0])
 	rows := len(matrix1)
 
-	sumMatrix := CreateZeroMatrix(rows, cols)
-	fmt.Println(sumMatrix)
+	subMatrix := CreateZeroMatrix[T](rows, cols)
+	fmt.Println(subMatrix)
 	
 	for row := 0; row < rows; row++ {
 		for col := 0; col < cols; col++ {
-			sumMatrix[row][col] = matrix1[row][col] - matrix2[row][col]
+			subMatrix[row][col] = matrix1[row][col] - matrix2[row][col]
 		}
 	}
-	return sumMatrix, nil
+	return subMatrix, nil
 }
-
-func DotProduct(matrix1, matrix2 [][] int) ([][] int, error) {
+func DotProduct[T Matrix](matrix1, matrix2 [][]T) ([][]T, error) {
 	row1 := len(matrix1)
 	col1 := len(matrix1[0])
 
@@ -53,7 +49,7 @@ func DotProduct(matrix1, matrix2 [][] int) ([][] int, error) {
 		return nil, fmt.Errorf("matrix dimensions cannot be multiplied! Wrong dimension: %dx%d & %dx%d", row1, col1, row2, col2)
 	}
 
-	prodMatrix := CreateZeroMatrix(row1, col2)
+	prodMatrix := CreateZeroMatrix[T](row1, col2)
 	
 	// Loop through prodMatrix to assign value
 	for row := 0; row < len(prodMatrix); row++ {
@@ -64,17 +60,14 @@ func DotProduct(matrix1, matrix2 [][] int) ([][] int, error) {
 			}
 		}
 	}
-
-
 	return prodMatrix, nil
 }
-// create transpose
-func TransposeMatrix(matrix [][]int) [][]int {
+func TransposeMatrix[T Matrix](matrix [][]T) [][]T {
 
 	rows := len(matrix[0])
 	cols := len(matrix)
 
-	tMatrix := CreateZeroMatrix(rows, cols)
+	tMatrix := CreateZeroMatrix[T](rows, cols)
 	for col := 0; col < cols; col++ {
 		for row := 0; row < rows; row++ {
 			tMatrix[row][col] = matrix[col][row]
@@ -84,14 +77,14 @@ func TransposeMatrix(matrix [][]int) [][]int {
 	
 	return tMatrix
 }
-func CreateZeroMatrix(rows, cols int) [][]int {
-	matrix := make([][]int, rows)
+func CreateZeroMatrix[T Matrix](rows, cols int) [][]T {
+	matrix := make([][]T, rows)
 	for i := range matrix {
-		matrix[i] = make([]int, cols)
+		matrix[i] = make([]T, cols)
 	}
 	return matrix
 }
-func PrintMatrix(matrixName string, matrix [][]int) {
+func PrintMatrix[T Matrix](matrixName string, matrix [][]T) {
 	fmt.Println()
 	fmt.Println(matrixName, ": ", len(matrix), "x", len(matrix[0]))
 	for _, row := range matrix {
